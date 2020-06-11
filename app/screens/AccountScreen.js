@@ -4,6 +4,7 @@ import { StyleSheet, View, FlatList } from "react-native";
 import { ListItem, ListItemSeparator } from "../components/lists";
 import colors from "../config/colors";
 import Icon from "../components/Icon";
+import routes from "../navigation/routes";
 import Screen from "../components/Screen";
 
 const menuItems = [
@@ -11,32 +12,33 @@ const menuItems = [
     title: "My Listings",
     icon: {
       name: "format-list-bulleted",
-      backgroundColor: colors.primary,
-    },
+      backgroundColor: colors.primary
+    }
   },
   {
     title: "My Messages",
     icon: {
       name: "email",
-      backgroundColor: colors.secondary,
+      backgroundColor: colors.secondary
     },
-  },
+    targetScreen: routes.MESSAGES
+  }
 ];
 
-function AccountScreen(props) {
+function AccountScreen({ navigation }) {
   return (
     <Screen style={styles.screen}>
       <View style={styles.container}>
         <ListItem
           title="Jatin Singh Saluja"
-          subTitle="jatinssaluja"
+          subTitle="jatin@gmail.com"
           image={require("../assets/jatin.jpg")}
         />
       </View>
       <View style={styles.container}>
         <FlatList
           data={menuItems}
-          keyExtractor={(menuItem) => menuItem.title}
+          keyExtractor={menuItem => menuItem.title}
           ItemSeparatorComponent={ListItemSeparator}
           renderItem={({ item }) => (
             <ListItem
@@ -47,6 +49,7 @@ function AccountScreen(props) {
                   backgroundColor={item.icon.backgroundColor}
                 />
               }
+              onPress={() => navigation.navigate(item.targetScreen)}
             />
           )}
         />
@@ -61,11 +64,11 @@ function AccountScreen(props) {
 
 const styles = StyleSheet.create({
   screen: {
-    backgroundColor: colors.light,
+    backgroundColor: colors.light
   },
   container: {
-    marginVertical: 20,
-  },
+    marginVertical: 20
+  }
 });
 
 export default AccountScreen;
